@@ -1,8 +1,13 @@
 package com.algaworks.brewer.model;
 
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Cerveja {
 	
+	@NotBlank(message = "SKU não pode estar vazio")
 	private String sku;
+	
 	private String nome;
 	
 	
