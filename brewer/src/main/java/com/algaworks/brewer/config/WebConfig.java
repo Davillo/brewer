@@ -1,4 +1,4 @@
-package com.brewer.config;
+package com.algaworks.brewer.config;
 
 
 
@@ -19,7 +19,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import com.brewer.controller.CervejasController;
+import com.algaworks.brewer.controller.CervejasController;
 
 @Configuration
 @EnableWebMvc
