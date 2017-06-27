@@ -29,4 +29,6 @@ public class CervejasController {
 		return "redirect:/cervejas/novo";
 
 	}
+	
+	
 }
