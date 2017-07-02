@@ -12,7 +12,8 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/vendors.min.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/algaworks.min.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/application.css}"/>
-
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/brewer.css}"/>
+	
 	
 </head>
 <body>
@@ -32,5 +33,6 @@
 <script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
 <script th:src="@{/javascripts/vendors/jquery.maskMoney.min.js}"></script>
 <script th:src="@{/javascripts/brewer.js}"></script>
+<th:block layout:fragment="javascript-extra"></th:block>
 </body>
 </html>
