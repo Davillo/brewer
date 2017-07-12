@@ -58,6 +58,7 @@ public class Cerveja {
 	@DecimalMax(value = "100.0", message = "A comissão deve ser menor que 9.999")
 	private BigDecimal comissao;
 	
+	@NotNull(message = "O estoque é um campo obrigatório!")
 	@Max(value = 9999 , message = "O estoque deve ser menor que 9.999")
 	@Column(name = "quantidade_estoque")
 	private Integer quantidadeEstoque;
