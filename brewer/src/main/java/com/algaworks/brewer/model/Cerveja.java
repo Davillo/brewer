@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -36,26 +40,37 @@ public class Cerveja {
 	private String nome;
 	
 	@NotBlank(message = "A descrição é um campo obrigatório!")
-	@Size(max = 50,min = 1, message="O tamanho da descrição deve estar entre 1 e 50")
+	@Size(max = 50,min = 1, message="O tamanho da descrição deve estar entre 1 e 50!")
 	private String descricao;
 	
 	
+	@NotNull(message = "Valor é um campo obrigatório!")
+	@DecimalMax(value = "99999999.99" , message = "O Valor da cerveja é inválido!")
+	@DecimalMin("0.01")
 	private BigDecimal valor;
 	
+	@NotNull(message = "O teor alcoólico é um campo obrigatório!")
+	@DecimalMax(value = "100.0", message = "O teor alcóolico deve ser menor que 100%")
 	@Column(name = "teor_alcoolico")
 	private BigDecimal teorAlcoolico;
 	
+	@NotNull(message = "A comissão é um campo obrigatório!")
+	@DecimalMax(value = "100.0", message = "A comissão deve ser menor que 9.999")
 	private BigDecimal comissao;
 	
+	@Max(value = 9999 , message = "O estoque deve ser menor que 9.999")
 	@Column(name = "quantidade_estoque")
 	private Integer quantidadeEstoque;
 	
+	@NotNull(message = "A origem é um campo obrigatório!")
 	@Enumerated(EnumType.STRING)
 	private Origem origem;
 	
+	@NotNull(message = "O sabor é um campo obrigatório!")
 	@Enumerated(EnumType.STRING)
 	private Sabor sabor;
 	
+	@NotNull(message = "O estilo é um campo obrigatório!")
 	@ManyToOne
 	@JoinColumn(name = "codigo_estilo")
 	private Estilo estilo;
