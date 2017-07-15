@@ -18,12 +18,17 @@
 		</div>
 	</div>
 	
+		<th:block th:include="fragments/MensagemSucesso"> </th:block>
+		
 	<div class="container-fluid">
-		<form>
+		<form th:object="${estilo}" method="POST">
+		
+		<th:block th:include="fragments/MensagensErroValidacao"> </th:block>
+		
 			<div class="row">
 				<div class="form-group  col-sm-12">
 					<label for="nome">Nome</label>
-					<input type="text" class="form-control" id="nome" autofocus="autofocus"/>
+					<input type="text" th:field="*{nome}" class="form-control" id="nome" autofocus="autofocus"/>
 				</div>
 			</div>
 				

@@ -35,7 +35,7 @@ public class CervejasController {
 	}
 
 	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
-	public ModelAndView cadastrar(@Validated Cerveja cerveja, BindingResult result, Model model,RedirectAttributes attributes) {
+	public ModelAndView cadastrar(@Validated Cerveja cerveja, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cerveja);
 		}
