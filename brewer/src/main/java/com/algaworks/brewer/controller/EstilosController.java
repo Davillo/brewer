@@ -60,11 +60,9 @@ public class EstilosController {
 			return ResponseEntity.badRequest().body(result.getFieldError("nome").getDefaultMessage());
 		}
 		
-		try{
-			estilo = cadastroEstiloService.salvar(estilo);
-		}catch (NomeEstiloJaCadastradoException ex) {
-			return ResponseEntity.badRequest().body(ex.getMessage());
-		}
+	
+		estilo = cadastroEstiloService.salvar(estilo);
+		
 		return ResponseEntity.ok(estilo);
 	}
 	
