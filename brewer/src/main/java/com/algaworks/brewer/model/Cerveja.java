@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -143,6 +145,11 @@ public class Cerveja {
 		this.estilo = estilo;
 	}
 	
+	@PrePersist
+	@PreUpdate
+	private void prePersistUpdate(){
+		sku = sku.toUpperCase();
+	}
 	
 	@Override
 	public int hashCode() {
