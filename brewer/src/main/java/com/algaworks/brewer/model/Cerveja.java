@@ -60,6 +60,13 @@ public class Cerveja {
 	@DecimalMax(value = "100.0", message = "A comissão deve ser menor que 9.999")
 	private BigDecimal comissao;
 	
+	
+	
+	private String foto;
+	
+	@Column(name = "content_type")
+	private String contentType;
+	
 	@NotNull(message = "O estoque é um campo obrigatório!")
 	@Max(value = 9999 , message = "O estoque deve ser menor que 9.999")
 	@Column(name = "quantidade_estoque")
@@ -143,6 +150,20 @@ public class Cerveja {
 	}
 	public void setEstilo(Estilo estilo) {
 		this.estilo = estilo;
+	}
+	
+	
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 	
 	@PrePersist

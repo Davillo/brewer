@@ -15,7 +15,10 @@
 	</Appenders>
 
 	<Loggers>
-	
+		
+		
+		<Logger name="com.algaworks.brewer" level="debug"></Logger>
+		
 		<Root level="error">
 			<AppenderRef ref="Console"/>
 	
