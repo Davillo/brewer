@@ -26,6 +26,7 @@ public class FotosController {
 		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
 
 		Thread thread = new Thread(new FotoStorageRunnable(files,resultado,fotoStorage));
+		System.out.println("Processo iniciado");
 		thread.start();
 		return resultado;
 	}
