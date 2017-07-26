@@ -23,6 +23,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import com.algaworks.brewer.validation.SKU;
 
@@ -154,6 +155,7 @@ public class Cerveja {
 	
 	
 	public String getFoto() {
+		
 		return foto;
 	}
 	public void setFoto(String foto) {
@@ -170,6 +172,10 @@ public class Cerveja {
 	@PreUpdate
 	private void prePersistUpdate(){
 		sku = sku.toUpperCase();
+	}
+	
+	public String getFotoOuMock(){
+		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
 	}
 	
 	@Override
