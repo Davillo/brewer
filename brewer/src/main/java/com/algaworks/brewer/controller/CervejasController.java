@@ -63,9 +63,10 @@ public class CervejasController {
 		ModelAndView mv = new ModelAndView("cerveja/PesquisaCervejas");
 		mv.addObject("estilos", estilos.findAll());
 		mv.addObject("sabores", Sabor.values());
-		mv.addObject("cervejas", cervejas.filtrar(cervejaFilter,pageable));
 		mv.addObject("origens", Origem.values());
 		
+		Page<Cerveja> pagina = cervejas.filtrar(cervejaFilter, pageable);
+		mv.addObject("pagina" , pagina);
 		return mv;
 	}
 	
