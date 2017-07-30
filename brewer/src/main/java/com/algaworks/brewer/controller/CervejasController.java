@@ -52,7 +52,6 @@ public class CervejasController {
 			return novo(cerveja);
 		}
 		
-		
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Salvo com sucesso!");
 	
