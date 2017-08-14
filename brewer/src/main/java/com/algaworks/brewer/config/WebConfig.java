@@ -1,7 +1,5 @@
 package com.algaworks.brewer.config;
 
-
-
 import java.math.BigDecimal;
 import java.util.Locale;
 
@@ -29,85 +27,80 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.algaworks.brewer.controller.CervejasController;
+import com.algaworks.brewer.controller.converter.CidadeConverter;
+import com.algaworks.brewer.controller.converter.EstadoConverter;
 import com.algaworks.brewer.controller.converter.EstiloConverter;
-import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.thymeleaf.BrewerDialect;
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
+@ComponentScan(basePackageClasses = { CervejasController.class })
 @EnableWebMvc
-@ComponentScan(basePackageClasses = {CervejasController.class})
 @EnableSpringDataWebSupport
 public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
-	private ApplicationContext applicationContext;	
-	// essa classe tem 3 objetos para o funcionamento das views
-	
-	private ITemplateResolver templateResolver(){
-		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-		resolver.setApplicationContext(applicationContext);
-		resolver.setPrefix("classpath:/templates/"); // onde estão os templates
-		resolver.setSuffix(".html"); // termino de arquivo
-		resolver.setTemplateMode(TemplateMode.HTML); // modo de template - HTML
-		return resolver;
-	}
-	
-	
+
+	private ApplicationContext applicationContext;
+
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-			this.applicationContext = applicationContext;
+		this.applicationContext = applicationContext;
 	}
-	
-	
-	
+
 	@Bean
-	public TemplateEngine templateEngine(){
+	public ViewResolver viewResolver() {
+		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+		resolver.setTemplateEngine(templateEngine());
+		resolver.setCharacterEncoding("UTF-8");
+		return resolver;
+	}
+
+	@Bean
+	public TemplateEngine templateEngine() {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.setEnableSpringELCompiler(true);
 		engine.setTemplateResolver(templateResolver());
+		
 		engine.addDialect(new LayoutDialect());
 		engine.addDialect(new BrewerDialect());
 		engine.addDialect(new DataAttributeDialect());
 		return engine;
 	}
-	
-	@Bean
-	public ViewResolver viewResolver(){
-		ThymeleafViewResolver resolver=  new ThymeleafViewResolver();
-		resolver.setTemplateEngine(templateEngine());
-		resolver.setCharacterEncoding("UTF-8");
+
+	private ITemplateResolver templateResolver() {
+		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+		resolver.setApplicationContext(applicationContext);
+		resolver.setPrefix("classpath:/templates/");
+		resolver.setSuffix(".html");
+		resolver.setTemplateMode(TemplateMode.HTML);
 		return resolver;
 	}
-	//adicionando recursos não mapeados, estáticos
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
 	
 	@Bean
-	public FormattingConversionService mvcConversionService(){
+	public FormattingConversionService mvcConversionService() {
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
 		conversionService.addConverter(new EstiloConverter());
-		//conversor para bigDecimal
+		conversionService.addConverter(new CidadeConverter());
+		conversionService.addConverter(new EstadoConverter());
+		
 		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
-		//covnersor para inteiro
+		
 		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
 		conversionService.addFormatterForFieldType(Integer.class, integerFormatter);
+		
 		return conversionService;
 	}
 	
-	
 	@Bean
-	public LocaleResolver localeResolver(){
+	public LocaleResolver localeResolver() {
 		return new FixedLocaleResolver(new Locale("pt", "BR"));
 	}
-		
 	
-	
-	
-	
-	
-	
-}	
+}
