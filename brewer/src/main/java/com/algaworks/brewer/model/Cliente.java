@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
@@ -62,11 +61,14 @@ public class Cliente implements Serializable {
 	@Embedded
 	private Endereco endereco;
 	
+	public String getCpfOuCnpjSemFormatacao(){
+		return TipoPessoa.removerFormatacao(this.cpfOuCnpj);
+	}
 	
 	@PrePersist
 	@PreUpdate
 	private void prePersistPreUpdate(){
-		this.cpfOuCnpj = this.cpfOuCnpj.replaceAll("\\.|-|/", "");
+		this.cpfOuCnpj = TipoPessoa.removerFormatacao(this.cpfOuCnpj);
 	}
 	
 
