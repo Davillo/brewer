@@ -34,6 +34,10 @@ public class Cidade implements Serializable {
 	private Estado estado;
 	
 	
+	public boolean temEstado(){
+		return estado != null;
+	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}
