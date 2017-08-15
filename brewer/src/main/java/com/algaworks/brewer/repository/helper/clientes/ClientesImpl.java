@@ -1,4 +1,4 @@
-package com.algaworks.brewer.repository.helper;
+package com.algaworks.brewer.repository.helper.clientes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
