@@ -12,13 +12,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.model.Usuario;
 import com.algaworks.brewer.repository.Usuarios;
+import com.algaworks.brewer.service.CadastroUsuarioService;
+import com.algaworks.brewer.service.exception.EmailUsuarioJaCadastradoException;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuariosController {
 	
 	@Autowired
-	private Usuarios usuarios;
+	private CadastroUsuarioService cadastroUsuarioService;
 	
 	@RequestMapping("/novo")
 	public ModelAndView novo(Usuario usuario){
@@ -32,8 +34,14 @@ public class UsuariosController {
 			return novo(usuario);
 		}
 		
-		//usuarios.save(usuario);
+		try{
+			cadastroUsuarioService.salvar(usuario);
+		}catch (EmailUsuarioJaCadastradoException e) {
+			result.rejectValue("email", e.getMessage(), e.getMessage());
+			return novo(usuario);
+		}
+		
 		attributes.addFlashAttribute("mensagem" , "Usuário salvo com sucesso!");
-		return new ModelAndView("redirect:/usuario/novo");
+		return new ModelAndView("redirect:/usuarios/novo");
 	}
 }
