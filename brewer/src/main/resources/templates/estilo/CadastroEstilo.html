@@ -31,7 +31,7 @@
 		<th:block th:include="fragments/MensagemSucesso"> </th:block>
 		
 	<div class="container-fluid">
-		<form th:object="${estilo}" method="POST">
+		<form th:object="${estilo}" th:action="@{/estilos/novo}" method="POST">
 		
 		<th:block th:include="fragments/MensagensErroValidacao"> </th:block>
 		

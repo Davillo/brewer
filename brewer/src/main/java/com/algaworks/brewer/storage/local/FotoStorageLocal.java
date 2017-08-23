@@ -19,6 +19,7 @@ import net.coobird.thumbnailator.name.Rename;
 
 public class FotoStorageLocal implements FotoStorage {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(FotoStorageLocal.class);
 	
 	private Path local;

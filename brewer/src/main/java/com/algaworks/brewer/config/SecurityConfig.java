@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.algaworks.brewer.security.AppUserDetailsService;
 
@@ -30,22 +31,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 			.antMatchers("/layout/**")
-			.antMatchers("/images/**")
-			.antMatchers("/usuarios/novo")
-			;
+			.antMatchers("/images/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.anyRequest().authenticated()
+		http.authorizeRequests()
+				.anyRequest()
+				.authenticated()
 				.and()
-			.formLogin()
+				.formLogin()
 				.loginPage("/login")
 				.permitAll()
 				.and()
-			.csrf().disable();
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.and()
+			.exceptionHandling().accessDeniedPage("/403")
+			.and()
+			.sessionManagement()
+			.maximumSessions(1)
+			.expiredUrl("/login")
+			;
 	}
 	
 	@Bean

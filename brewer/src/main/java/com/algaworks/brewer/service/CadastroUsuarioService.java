@@ -2,7 +2,6 @@ package com.algaworks.brewer.service;
 
 import java.util.Optional;
 
-import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
