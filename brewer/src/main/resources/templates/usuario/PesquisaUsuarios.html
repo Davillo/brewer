@@ -61,13 +61,30 @@
 			
 			<button type="submit" class="btn  btn-primary">Pesquisar</button>
 		</form>
+		
+		<div class="aw-datatable-toolbar">
+			<button class="btn btn-default  btn-xs  js-status-btn disabled" data:status="ATIVAR" data:url="@{/usuarios/status}">
+				<span>Ativar</span>
+			</button>
+			
+			<button class="btn btn-default  btn-xs  js-status-btn disabled" data:status="DESATIVAR" data:url="@{/usuarios/status}">
+				<span>Desativar</span>
+			</button>
+		</div>
 
 		<div class="table-responsive  bw-tabela-simples">
         	<table class="table  table-hover">
 	            <thead>
 	            	<tr>
+	            		<th class="table-usuarios-col-status">
+	            			<div class="checkbox  aw-checkbox-no-margin">
+	            				<input type="checkbox" class="js-selecao-todos"/>
+	            				<label></label>
+	            			</div>
+	            		</th>
 	            		<th>Nome</th>
 	                	<th>E-mail</th>
+	                	<th>Grupo</th>
 	                	<th>Status</th>
 	                 	<th class="table-col-acoes"></th>
 					</tr>
@@ -75,13 +92,26 @@
 			
 	            <tbody>
 					<tr th:each="usuario : ${usuarios}">
+						<td>
+							<div class="checkbox  aw-checkbox-no-margin" th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
+	            				<input type="checkbox" class="js-selecao" data:codigo="${usuario.codigo}">
+	            				<label></label>
+	            			</div>
+						</td>
 						<td th:text="${usuario.nome}"></td>
 						<td th:text="${usuario.email}"></td>
-						<td> 
-						<span th:each="grupo : ${usuario.grupos}" th:text="|${grupo.nome} ${grupoStat.last ? '' : ', '}| " ></span>
-						
-						 </td>
-						<td th:text="${usuario.ativo} ? Ativo : Inativo"></td>
+						<td>
+							<span th:each="grupo : ${usuario.grupos}" th:text="|${grupo.nome}${grupoStat.last ? '' : ', '}|"></span>
+						</td>
+						<td >
+						<th:block th:if="${usuario.ativo}">
+							<span class="label label-success" th:text="Ativo"></span>
+						</th:block>
+						<th:block th:if="${not usuario.ativo}">
+							<span class="label label-danger" th:text="Inativo"></span>
+						</th:block>
+					
+						</td>
 	                 	<td class="text-center">
 							<a class="btn  btn-link  btn-xs" title="Editar"> 
 								<i class="glyphicon glyphicon-pencil"></i>
@@ -100,5 +130,8 @@
     	 </div>
 	</div>
 </section>
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/multiselecao.js}"></script>
+</th:block>
 </body>
 </html>
